@@ -1,0 +1,34 @@
+name: Sync KOReader Stats from Koofr WebDAV
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Runs every Sunday at midnight
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install WebDAV client
+        run: sudo apt install cadaver
+
+      - name: Download from Koofr WebDAV
+        run: |
+          mkdir -p koreader_stats
+          cd koreader_stats
+          cadaver https://app.koofr.net/dav/Koofr/KOReaderStats <<EOF
+          open https://app.koofr.net/dav/Koofr/KOReaderStats
+          username ${{ secrets.KOOFR_WEBDAV_USER }}
+          password ${{ secrets.KOOFR_WEBDAV_PASS }}
+          mget *
+          bye
+          EOF
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.email "salem.tabal2001@gmail.com"
+          git config --global user.name "Salem El Tabal"
+          git add koreader_stats/*
+          git commit -m "Weekly KOReader stats update"
+          git push
