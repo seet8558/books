@@ -30,6 +30,6 @@ jobs:
         run: |
           git config --global user.email "salem.tabal2001@gmail.com"
           git config --global user.name "Salem El Tabal"
-          git add koreader_stats/*
+          git add .
           git commit -m "Weekly KOReader stats update"
           git push
