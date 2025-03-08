@@ -26,10 +26,13 @@ jobs:
           bye
           EOF
 
+      - name: List files in repository
+        run: |
+          ls -la  # List files to check if stats were downloaded
       - name: Commit and Push Changes
         run: |
           git config --global user.email "salem.tabal2001@gmail.com"
           git config --global user.name "Salem El Tabal"
-          git add .
-          git commit -m "Weekly KOReader stats update"
+          git add -A
+          git commit -m "Weekly KOReader stats update" || echo "No changes to commit."
           git push
