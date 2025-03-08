@@ -35,4 +35,4 @@ jobs:
           git config --global user.name "Salem El Tabal"
           git add -A
           git commit -m "Weekly KOReader stats update" || echo "No changes to commit."
-          git push https://${{ secrets.GH_TOKEN }}@github.com/seet8558/books.git
+          git push https://${{ secrets.GH_TOKEN }}@github.com/seet8558/books.git HEAD:main
